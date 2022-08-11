@@ -40,6 +40,7 @@ public final class PaperclipBootstrapService implements IBootstrapService {
   private static final BlackboardMap.@NonNull Key<Path>   PAPERCLIP_JAR_KEY     = Blackboard.key("ignite.paper.jar", Path.class);
   private static final BlackboardMap.@NonNull Key<String> PAPERCLIP_TARGET_KEY  = Blackboard.key("ignite.paper.target", String.class);
   private static final BlackboardMap.@NonNull Key<Boolean> LAUNCH_OVERRIDE_KEY  = Blackboard.key("ignite.paper.override", Boolean.class);
+  private static final BlackboardMap.@NonNull Key<String>  SERVER_JAR_KEY       = Blackboard.key("ignite.paper.serverJar", String.class);
 
   /**
    * The minecraft version.
@@ -60,6 +61,11 @@ public final class PaperclipBootstrapService implements IBootstrapService {
    * Whether to override the launch jar with one set by this service.
    */
   public static final boolean FORCE_LAUNCH_JAR = Boolean.parseBoolean(System.getProperty(PaperclipBootstrapService.LAUNCH_OVERRIDE_KEY.getName(), "true"));
+
+  /**
+   * The server jar created by paperclip.
+   */
+  public static final String SERVER_JAR = System.getProperty(PaperclipBootstrapService.SERVER_JAR_KEY.getName(), "paper");
 
   @Override
   public @NonNull String name() {
@@ -106,6 +112,6 @@ public final class PaperclipBootstrapService implements IBootstrapService {
   }
 
   public Path getServerJar() {
-    return Paths.get(String.format("./versions/%s/paper-%s.jar", PaperclipBootstrapService.MINECRAFT_VERSION, PaperclipBootstrapService.MINECRAFT_VERSION));
+    return Paths.get(String.format("./versions/%s/%s-%s.jar", PaperclipBootstrapService.MINECRAFT_VERSION, PaperclipBootstrapService.SERVER_JAR, PaperclipBootstrapService.MINECRAFT_VERSION));
   }
 }
